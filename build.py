@@ -358,19 +358,28 @@ def copy_static() -> None:
         shutil.copytree(STATIC_DIR, DIST_DIR, dirs_exist_ok=True)
 
 
-def load_about_page() -> Page | None:
-    path = CONTENT_DIR / "about.md"
-    if not path.exists():
-        return None
-    meta, body = split_front_matter(path.read_text(encoding="utf-8"), path)
-    title = str(meta.get("title") or "About").strip()
-    return Page(
-        title=title,
-        slug="about",
-        description=str(meta.get("description") or "").strip(),
-        body_html=render_markdown(body),
-        source=path,
-    )
+def load_pages() -> list[Page]:
+    """Standalone pages: every content/*.md (not in posts/) becomes /<slug>/.
+
+    e.g. content/about.md -> /about/, content/projects.md -> /projects/.
+    """
+    pages = []
+    for path in sorted(CONTENT_DIR.glob("*.md")):
+        meta, body = split_front_matter(path.read_text(encoding="utf-8"), path)
+        title = str(meta.get("title") or path.stem.replace("-", " ").title()).strip()
+        slug = str(meta.get("slug") or "").strip() or slugify(path.stem)
+        if slug != slugify(slug):
+            raise BuildError(f"{path}: slug {slug!r} is not URL-safe.")
+        pages.append(
+            Page(
+                title=title,
+                slug=slug,
+                description=str(meta.get("description") or "").strip(),
+                body_html=render_markdown(body),
+                source=path,
+            )
+        )
+    return pages
 
 
 def build() -> None:
@@ -382,8 +391,10 @@ def build() -> None:
     posts = load_posts()
     for post in posts:
         post.body_html = render_markdown(post.body_markdown)
+    # Every page's sidebar lists all published articles, newest first.
+    env.globals["sidebar_posts"] = posts
     tags = collect_tags(posts)
-    about = load_about_page()
+    pages = load_pages()
 
     # Article pages: /articles/<slug>/
     article_tpl = env.get_template("article.html")
@@ -427,16 +438,15 @@ def build() -> None:
             ),
         )
 
-    # About: /about/
+    # Standalone pages: /about/, /projects/, ...
+    page_tpl = env.get_template("page.html")
     extra_paths = ["/", "/archive/"]
-    if about:
+    for page in pages:
         write_page(
-            "about/index.html",
-            env.get_template("page.html").render(
-                page=about, canonical=absolute_url(about.url_path)
-            ),
+            f"{page.slug}/index.html",
+            page_tpl.render(page=page, canonical=absolute_url(page.url_path)),
         )
-        extra_paths.append("/about/")
+        extra_paths.append(page.url_path)
 
     # Feeds and machine-readable files
     write_page("feed.xml", generate_rss(posts))

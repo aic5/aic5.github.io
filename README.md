@@ -176,7 +176,8 @@ only the standard library (`unittest`).
 ```text
 ├── content/
 │   ├── posts/            # one .md file per article
-│   └── about.md          # the About page
+│   ├── about.md          # standalone pages: every content/*.md
+│   └── projects.md       #   becomes /<name>/ on the site
 ├── templates/            # Jinja2 templates (base, index, article, ...)
 ├── static/
 │   ├── css/style.css     # the entire design

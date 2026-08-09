@@ -1,28 +1,50 @@
 /* A small, readable stylesheet. No framework, no build step.
-   Tuned for comfortable long-form reading. */
+   Typography follows the conventions of the best reading sites
+   (Tufte CSS, iA, Practical Typography): a measured column of
+   ~60–65 characters, generous type, quiet chrome. */
+
+/* Theme model: light is the base. Dark applies either because the
+   system asks for it (and the reader hasn't chosen light), or because
+   the reader explicitly chose dark via the header toggle, which sets
+   data-theme on <html> and persists in localStorage. */
 
 :root {
-  --text: #1a1d21;
-  --text-muted: #5c6670;
-  --bg: #fffdfa;            /* very slight warmth is easier on the eyes */
-  --bg-subtle: #f4f2ee;
-  --accent: #0b57a4;
-  --border: #e4e1db;
-  --max-width: 42rem;
+  --text: #111111;
+  --text-muted: #585f66;
+  --bg: #fffff8;             /* Tufte's warm off-white */
+  --bg-subtle: #f5f4ec;
+  --accent: #a4262c;         /* restrained book-red for links */
+  --accent-cool: #0b57a4;
+  --border: #e2e0d4;
+  --measure: 44rem;          /* ~72ch at this type size */
   --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-  --serif: Charter, Georgia, "Times New Roman", serif;
+  --serif: Charter, "Palatino Linotype", Palatino, Georgia, serif;
   --mono: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
+  color-scheme: light;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --text: #e8e6e3;
-    --text-muted: #a3adb8;
-    --bg: #16181b;
-    --bg-subtle: #202428;
-    --accent: #7ab8f5;
-    --border: #2e343a;
+  :root:not([data-theme="light"]) {
+    --text: #dedede;
+    --text-muted: #9aa3ac;
+    --bg: #151515;
+    --bg-subtle: #1f1f1d;
+    --accent: #e0908f;
+    --accent-cool: #7ab8f5;
+    --border: #33322e;
+    color-scheme: dark;
   }
+}
+
+:root[data-theme="dark"] {
+  --text: #dedede;
+  --text-muted: #9aa3ac;
+  --bg: #151515;
+  --bg-subtle: #1f1f1d;
+  --accent: #e0908f;
+  --accent-cool: #7ab8f5;
+  --border: #33322e;
+  color-scheme: dark;
 }
 
 * {
@@ -36,12 +58,14 @@ html {
 body {
   margin: 0;
   font-family: var(--serif);
-  font-size: 1.125rem;          /* 18px — comfortable for body text */
-  line-height: 1.7;
+  /* Fluid type: 17px on small phones up to 20px on desktop. */
+  font-size: clamp(1.0625rem, 0.95rem + 0.45vw, 1.25rem);
+  line-height: 1.6;
   color: var(--text);
   background: var(--bg);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  font-kerning: normal;
 }
 
 a {
@@ -55,57 +79,158 @@ a:focus {
 }
 
 :focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--accent-cool);
   outline-offset: 2px;
   border-radius: 2px;
 }
 
+::selection {
+  background: var(--bg-subtle);
+}
+
 /* Layout ------------------------------------------------------------- */
 
-.site-header,
-main,
-.site-footer {
-  max-width: var(--max-width);
+:root {
+  --header-height: 3.5rem;
+  --sidebar-width: 15rem;
+  --layout-width: 68rem;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+  gap: 3rem;
+  max-width: var(--layout-width);
   margin: 0 auto;
-  padding: 0 1.25rem;
+  padding: 2.5rem 1.25rem 0;
 }
 
 main {
   min-height: 60vh;
+  max-width: var(--measure);
+  width: 100%;
+  margin: 0 auto;
 }
 
-/* Header ------------------------------------------------------------- */
+/* Header: floating bar that stays put while you scroll --------------- */
 
 .site-header {
-  padding-top: 2.25rem;
-  padding-bottom: 3rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
 }
 
-.site-header nav {
+.header-inner {
   display: flex;
   flex-wrap: wrap;
-  align-items: baseline;
+  align-items: center;
   gap: 1rem;
-  border-bottom: 1px solid var(--border);
-  padding-bottom: 1.1rem;
+  max-width: var(--layout-width);
+  margin: 0 auto;
+  padding: 0.75rem 1.25rem;
+  min-height: var(--header-height);
 }
 
 .site-name {
-  font-size: 1.3rem;
-  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.05rem;
+  font-weight: 600;
   color: var(--text);
   margin-right: auto;
   letter-spacing: 0.01em;
 }
 
+.site-name:hover {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.site-mark {
+  display: block;
+  flex-shrink: 0;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--bg);
+  background: var(--accent);
+  border-radius: 4px;
+  padding: 0.22rem 0.45rem;
+  line-height: 1;
+}
+
+/* Sidebar: list of all articles, bookdown-style ---------------------- */
+
+.sidebar {
+  position: sticky;
+  top: calc(var(--header-height) + 1.5rem);
+  align-self: start;
+  max-height: calc(100vh - var(--header-height) - 3rem);
+  overflow-y: auto;
+  font-family: var(--sans);
+  padding-right: 1.25rem;
+  border-right: 1px solid var(--border);
+}
+
+.sidebar h2 {
+  margin: 0.2rem 0 0.9rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.sidebar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar li {
+  margin: 0;
+}
+
+.sidebar a {
+  display: block;
+  padding: 0.32rem 0.6rem;
+  margin: 0 -0.6rem 0.1rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: var(--text-muted);
+}
+
+.sidebar a:hover {
+  color: var(--accent);
+  background: var(--bg-subtle);
+  text-decoration: none;
+}
+
+.sidebar a.active {
+  color: var(--accent);
+  background: var(--bg-subtle);
+  font-weight: 600;
+}
+
 .nav-links {
   display: flex;
-  gap: 1.25rem;
+  flex-wrap: wrap;
+  gap: 1.4rem;
+  row-gap: 0.4rem;
   list-style: none;
   margin: 0;
   padding: 0;
   font-family: var(--sans);
-  font-size: 0.9rem;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
 }
 
 .nav-links a {
@@ -114,18 +239,36 @@ main {
 
 .nav-links a:hover {
   color: var(--accent);
+  text-decoration: none;
+}
+
+.theme-toggle {
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  line-height: 1;
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  padding: 0 0.1rem;
+  cursor: pointer;
+}
+
+.theme-toggle:hover {
+  color: var(--accent);
 }
 
 /* Post lists --------------------------------------------------------- */
 
 .post-summary {
-  margin-bottom: 3rem;
+  margin-bottom: 3.25rem;
 }
 
 .post-summary h2 {
-  margin: 0 0 0.35rem;
-  font-size: 1.4rem;
-  line-height: 1.35;
+  margin: 0 0 0.3rem;
+  font-size: 1.35rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.005em;
 }
 
 .post-summary h2 a {
@@ -134,35 +277,39 @@ main {
 
 .post-summary h2 a:hover {
   color: var(--accent);
+  text-decoration: none;
 }
 
 .post-meta {
-  margin: 0 0 0.6rem;
+  margin: 0 0 0.65rem;
   font-family: var(--sans);
-  font-size: 0.85rem;
-  letter-spacing: 0.02em;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   color: var(--text-muted);
 }
 
 .post-description {
-  margin: 0 0 0.6rem;
+  margin: 0 0 0.65rem;
+  font-size: 0.95em;
   color: var(--text);
 }
 
 .tag-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0.45rem;
   list-style: none;
   margin: 0;
   padding: 0;
   font-family: var(--sans);
-  font-size: 0.8rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.03em;
 }
 
 .tag-list a {
   display: inline-block;
-  padding: 0.12rem 0.6rem;
+  padding: 0.1rem 0.6rem;
   border: 1px solid var(--border);
   border-radius: 1rem;
   color: var(--text-muted);
@@ -177,130 +324,149 @@ main {
 /* Articles ----------------------------------------------------------- */
 
 .article-header {
-  margin-bottom: 2.5rem;
+  margin-bottom: 2.75rem;
 }
 
 .article-header h1 {
-  margin: 0 0 0.6rem;
-  font-size: 2rem;
-  line-height: 1.25;
-  letter-spacing: -0.01em;
-}
-
-.article-body {
-  font-size: 1.125rem;
+  margin: 0 0 0.7rem;
+  font-size: 2.1rem;
+  font-weight: 600;
+  line-height: 1.18;
+  letter-spacing: -0.015em;
 }
 
 .article-body p {
-  margin: 0 0 1.35em;
+  margin: 0 0 1.4em;
+  hanging-punctuation: first;
 }
 
-/* Underline links inside prose — clearer affordance while reading. */
+/* Prose links: subtle underline that strengthens on hover. */
 .article-body a {
+  color: var(--text);
   text-decoration: underline;
-  text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent);
-  text-underline-offset: 0.15em;
+  text-decoration-color: color-mix(in srgb, var(--accent) 55%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
 }
 
 .article-body a:hover {
+  color: var(--accent);
   text-decoration-color: var(--accent);
 }
 
 .article-body h2 {
-  margin: 2.5rem 0 0.9rem;
-  font-size: 1.45rem;
+  margin: 2.6rem 0 0.9rem;
+  font-size: 1.4rem;
+  font-weight: 600;
   line-height: 1.3;
+  letter-spacing: -0.005em;
 }
 
 .article-body h3 {
-  margin: 2rem 0 0.7rem;
-  font-size: 1.15rem;
+  margin: 2.1rem 0 0.7rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  font-style: italic;
 }
 
+/* Hanging bullets: markers sit in the margin, text stays aligned
+   with the paragraphs above and below. */
 .article-body ul,
 .article-body ol {
-  margin: 0 0 1.35em;
-  padding-left: 1.5em;
+  margin: 0 0 1.4em;
+  padding-left: 0;
 }
 
 .article-body li {
-  margin-bottom: 0.4em;
+  margin-left: 1.3em;
+  margin-bottom: 0.45em;
+  padding-left: 0.2em;
 }
 
 .article-body img {
   max-width: 100%;
   height: auto;
-  border-radius: 4px;
+  border-radius: 3px;
+  margin: 0.5rem 0;
 }
 
 .article-body blockquote {
-  margin: 1.6rem 0;
-  padding: 0.3rem 1.35rem;
-  border-left: 3px solid var(--accent);
+  margin: 1.7rem 0 1.7rem 0;
+  padding: 0.1rem 1.4rem;
+  border-left: 2px solid var(--text-muted);
   color: var(--text-muted);
   font-style: italic;
 }
 
+.article-body blockquote em {
+  font-style: normal;
+}
+
 .article-body hr {
   border: none;
-  border-top: 1px solid var(--border);
-  margin: 2.75rem auto;
-  width: 40%;
+  margin: 2.75rem 0;
+  text-align: center;
+}
+
+.article-body hr::after {
+  content: "· · ·";
+  color: var(--text-muted);
+  letter-spacing: 0.6em;
 }
 
 .article-body table {
   border-collapse: collapse;
   width: 100%;
-  margin: 1.6rem 0;
-  font-size: 0.95rem;
+  margin: 1.7rem 0;
+  font-size: 0.82em;
   font-family: var(--sans);
+  line-height: 1.45;
 }
 
 .article-body th,
 .article-body td {
-  border: 1px solid var(--border);
-  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  padding: 0.55rem 0.75rem 0.55rem 0;
   text-align: left;
+  vertical-align: top;
 }
 
 .article-body th {
-  background: var(--bg-subtle);
+  border-bottom-width: 2px;
+  font-weight: 600;
 }
 
 /* Code --------------------------------------------------------------- */
 
 code {
   font-family: var(--mono);
-  font-size: 0.85em;
+  font-size: 0.82em;
   background: var(--bg-subtle);
-  border: 1px solid var(--border);
-  border-radius: 4px;
+  border-radius: 3px;
   padding: 0.1em 0.35em;
 }
 
 pre {
   background: var(--bg-subtle);
-  border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: 6px;
   padding: 1.1rem 1.3rem;
   overflow-x: auto;
   line-height: 1.55;
-  margin: 1.6rem 0;
+  margin: 1.7rem 0;
 }
 
 pre code {
   background: none;
-  border: none;
   padding: 0;
-  font-size: 0.85rem;
+  font-size: 0.78em;
 }
 
 /* Article footer: share links + read next ---------------------------- */
 
 .article-footer {
-  margin-top: 3.5rem;
+  margin-top: 4rem;
   border-top: 1px solid var(--border);
-  padding-top: 1.5rem;
+  padding-top: 1.6rem;
   font-family: var(--sans);
 }
 
@@ -308,27 +474,32 @@ pre code {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: 1rem;
-  font-size: 0.9rem;
+  gap: 1.1rem;
+  font-size: 0.85rem;
 }
 
 .share-label {
   color: var(--text-muted);
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
 }
 
 .share-links a {
   color: var(--text-muted);
   text-decoration: underline;
-  text-underline-offset: 0.15em;
+  text-underline-offset: 0.18em;
+  text-decoration-color: var(--border);
 }
 
 .share-links a:hover {
   color: var(--accent);
+  text-decoration-color: var(--accent);
 }
 
 .copy-link {
   font-family: var(--sans);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: var(--text-muted);
   background: none;
   border: 1px solid var(--border);
@@ -343,15 +514,16 @@ pre code {
 }
 
 .read-next {
-  margin-top: 2.25rem;
+  margin-top: 2.5rem;
 }
 
 .read-next h2 {
-  font-size: 0.85rem;
+  font-size: 0.75rem;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   color: var(--text-muted);
-  margin: 0 0 0.75rem;
+  margin: 0 0 0.8rem;
 }
 
 .read-next ul {
@@ -366,20 +538,26 @@ pre code {
   align-items: baseline;
   justify-content: space-between;
   padding: 0.35rem 0;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
+}
+
+.read-next a {
+  font-family: var(--serif);
+  font-size: 1.05em;
 }
 
 .read-next time {
   flex-shrink: 0;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--text-muted);
 }
 
 /* Archive ------------------------------------------------------------ */
 
 .archive-year h2 {
-  font-size: 1.2rem;
-  margin: 2.25rem 0 0.75rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 2.4rem 0 0.75rem;
 }
 
 .archive-list {
@@ -390,40 +568,48 @@ pre code {
 
 .archive-list li {
   display: flex;
-  gap: 1rem;
+  gap: 1.1rem;
   align-items: baseline;
-  padding: 0.35rem 0;
+  padding: 0.38rem 0;
 }
 
 .archive-list time {
-  flex: 0 0 5.5rem;
+  flex: 0 0 5.75rem;
   font-family: var(--sans);
-  font-size: 0.85rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
   color: var(--text-muted);
 }
 
 .archive-link {
-  margin: 2.5rem 0;
+  margin: 2.75rem 0;
   font-family: var(--sans);
-  font-size: 0.95rem;
+  font-size: 0.88rem;
 }
 
 /* Footer ------------------------------------------------------------- */
 
+/* Full-width page footer: spans the whole layout, sidebar included. */
 .site-footer {
-  margin-top: 4.5rem;
-  padding-top: 1.5rem;
-  padding-bottom: 2.75rem;
+  margin-top: 5rem;
   border-top: 1px solid var(--border);
   font-family: var(--sans);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
   color: var(--text-muted);
+}
+
+.site-footer p {
+  max-width: var(--layout-width);
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 3rem;
 }
 
 .site-footer a {
   color: var(--text-muted);
   text-decoration: underline;
-  text-underline-offset: 0.15em;
+  text-underline-offset: 0.18em;
+  text-decoration-color: var(--border);
 }
 
 .site-footer a:hover {
@@ -441,20 +627,26 @@ pre code {
   white-space: nowrap;
 }
 
-/* Small screens ------------------------------------------------------ */
+/* Narrow screens: drop the sidebar, keep the floating header --------- */
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+    padding-top: 1.75rem;
+  }
+
+  .sidebar {
+    display: none;
+  }
+}
 
 @media (max-width: 480px) {
-  body {
-    font-size: 1.0625rem;
-  }
-
-  .site-header {
-    padding-top: 1.25rem;
-    padding-bottom: 1.75rem;
-  }
-
   .article-header h1 {
     font-size: 1.6rem;
+  }
+
+  .nav-links {
+    gap: 1rem;
   }
 
   .archive-list li,

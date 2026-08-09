@@ -17,28 +17,81 @@
   <meta property="og:type" content="{% block og_type %}website{% endblock %}">
   {% block extra_head %}{% endblock %}
   <link rel="alternate" type="application/rss+xml" title="{{ site_name }}" href="{{ site_url }}/feed.xml">
+  <script>
+    /* Apply a saved theme choice before first paint to avoid a flash.
+       With JS disabled the site simply follows the system preference. */
+    (function () {
+      try {
+        var t = localStorage.getItem("theme");
+        if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    })();
+  </script>
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+  {% set current_path = (canonical | replace(site_url, "")) if canonical else none %}
   <header class="site-header">
-    <nav aria-label="Main navigation">
-      <a class="site-name" href="/">{{ site_name }}</a>
+    <nav class="header-inner" aria-label="Main navigation">
+      <a class="site-name" href="/">
+        <span class="site-mark">aic5</span>
+        <span>{{ site_name }}</span>
+      </a>
       <ul class="nav-links">
         <li><a href="/">Home</a></li>
         <li><a href="/archive/">Archive</a></li>
+        <li><a href="/projects/">Projects</a></li>
         <li><a href="/about/">About</a></li>
+        <li><a href="https://github.com/aic5" target="_blank" rel="me noopener">GitHub</a></li>
         <li><a href="/feed.xml" title="RSS feed">RSS</a></li>
+        <li><button type="button" class="theme-toggle" aria-label="Toggle dark mode" hidden>☾</button></li>
       </ul>
     </nav>
   </header>
 
-  <main id="main">
-    {% block content %}{% endblock %}
-  </main>
+  <div class="layout">
+    <aside class="sidebar" aria-label="All articles">
+      <h2>Articles</h2>
+      <ul>
+        {% for p in sidebar_posts %}
+        <li>
+          <a href="{{ p.url_path }}"{% if current_path == p.url_path %} class="active" aria-current="page"{% endif %}>{{ p.title }}</a>
+        </li>
+        {% endfor %}
+      </ul>
+    </aside>
+
+    <main id="main">
+      {% block content %}{% endblock %}
+    </main>
+  </div>
 
   <footer class="site-footer">
     <p>&copy; {{ current_year }} {{ copyright_holder }} · <a href="/feed.xml">RSS</a></p>
   </footer>
+
+  <script>
+    /* Theme toggle: defaults to the system preference; a click overrides
+       it and the choice is remembered. Hidden entirely without JS. */
+    (function () {
+      var btn = document.querySelector(".theme-toggle");
+      if (!btn) return;
+      var root = document.documentElement;
+      function effective() {
+        return root.dataset.theme ||
+          (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      }
+      function paint() { btn.textContent = effective() === "dark" ? "☀" : "☾"; }
+      btn.hidden = false;
+      paint();
+      btn.addEventListener("click", function () {
+        var next = effective() === "dark" ? "light" : "dark";
+        root.dataset.theme = next;
+        try { localStorage.setItem("theme", next); } catch (e) {}
+        paint();
+      });
+    })();
+  </script>
   {{ analytics_html | safe }}
 </body>
 </html>
