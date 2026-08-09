@@ -1,0 +1,466 @@
+/* A small, readable stylesheet. No framework, no build step.
+   Tuned for comfortable long-form reading. */
+
+:root {
+  --text: #1a1d21;
+  --text-muted: #5c6670;
+  --bg: #fffdfa;            /* very slight warmth is easier on the eyes */
+  --bg-subtle: #f4f2ee;
+  --accent: #0b57a4;
+  --border: #e4e1db;
+  --max-width: 42rem;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --serif: Charter, Georgia, "Times New Roman", serif;
+  --mono: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #e8e6e3;
+    --text-muted: #a3adb8;
+    --bg: #16181b;
+    --bg-subtle: #202428;
+    --accent: #7ab8f5;
+    --border: #2e343a;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 1.125rem;          /* 18px — comfortable for body text */
+  line-height: 1.7;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  text-decoration: underline;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Layout ------------------------------------------------------------- */
+
+.site-header,
+main,
+.site-footer {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+main {
+  min-height: 60vh;
+}
+
+/* Header ------------------------------------------------------------- */
+
+.site-header {
+  padding-top: 2.25rem;
+  padding-bottom: 3rem;
+}
+
+.site-header nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 1rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1.1rem;
+}
+
+.site-name {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: var(--text);
+  margin-right: auto;
+  letter-spacing: 0.01em;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.25rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-family: var(--sans);
+  font-size: 0.9rem;
+}
+
+.nav-links a {
+  color: var(--text-muted);
+}
+
+.nav-links a:hover {
+  color: var(--accent);
+}
+
+/* Post lists --------------------------------------------------------- */
+
+.post-summary {
+  margin-bottom: 3rem;
+}
+
+.post-summary h2 {
+  margin: 0 0 0.35rem;
+  font-size: 1.4rem;
+  line-height: 1.35;
+}
+
+.post-summary h2 a {
+  color: var(--text);
+}
+
+.post-summary h2 a:hover {
+  color: var(--accent);
+}
+
+.post-meta {
+  margin: 0 0 0.6rem;
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+  color: var(--text-muted);
+}
+
+.post-description {
+  margin: 0 0 0.6rem;
+  color: var(--text);
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-family: var(--sans);
+  font-size: 0.8rem;
+}
+
+.tag-list a {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  color: var(--text-muted);
+}
+
+.tag-list a:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  text-decoration: none;
+}
+
+/* Articles ----------------------------------------------------------- */
+
+.article-header {
+  margin-bottom: 2.5rem;
+}
+
+.article-header h1 {
+  margin: 0 0 0.6rem;
+  font-size: 2rem;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.article-body {
+  font-size: 1.125rem;
+}
+
+.article-body p {
+  margin: 0 0 1.35em;
+}
+
+/* Underline links inside prose — clearer affordance while reading. */
+.article-body a {
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  text-underline-offset: 0.15em;
+}
+
+.article-body a:hover {
+  text-decoration-color: var(--accent);
+}
+
+.article-body h2 {
+  margin: 2.5rem 0 0.9rem;
+  font-size: 1.45rem;
+  line-height: 1.3;
+}
+
+.article-body h3 {
+  margin: 2rem 0 0.7rem;
+  font-size: 1.15rem;
+}
+
+.article-body ul,
+.article-body ol {
+  margin: 0 0 1.35em;
+  padding-left: 1.5em;
+}
+
+.article-body li {
+  margin-bottom: 0.4em;
+}
+
+.article-body img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+.article-body blockquote {
+  margin: 1.6rem 0;
+  padding: 0.3rem 1.35rem;
+  border-left: 3px solid var(--accent);
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.article-body hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2.75rem auto;
+  width: 40%;
+}
+
+.article-body table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1.6rem 0;
+  font-size: 0.95rem;
+  font-family: var(--sans);
+}
+
+.article-body th,
+.article-body td {
+  border: 1px solid var(--border);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+
+.article-body th {
+  background: var(--bg-subtle);
+}
+
+/* Code --------------------------------------------------------------- */
+
+code {
+  font-family: var(--mono);
+  font-size: 0.85em;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+}
+
+pre {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.1rem 1.3rem;
+  overflow-x: auto;
+  line-height: 1.55;
+  margin: 1.6rem 0;
+}
+
+pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.85rem;
+}
+
+/* Article footer: share links + read next ---------------------------- */
+
+.article-footer {
+  margin-top: 3.5rem;
+  border-top: 1px solid var(--border);
+  padding-top: 1.5rem;
+  font-family: var(--sans);
+}
+
+.share-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 1rem;
+  font-size: 0.9rem;
+}
+
+.share-label {
+  color: var(--text-muted);
+}
+
+.share-links a {
+  color: var(--text-muted);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.share-links a:hover {
+  color: var(--accent);
+}
+
+.copy-link {
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 0.15rem 0.7rem;
+  cursor: pointer;
+}
+
+.copy-link:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.read-next {
+  margin-top: 2.25rem;
+}
+
+.read-next h2 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin: 0 0 0.75rem;
+}
+
+.read-next ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.read-next li {
+  display: flex;
+  gap: 1rem;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 0.35rem 0;
+  font-size: 0.95rem;
+}
+
+.read-next time {
+  flex-shrink: 0;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* Archive ------------------------------------------------------------ */
+
+.archive-year h2 {
+  font-size: 1.2rem;
+  margin: 2.25rem 0 0.75rem;
+}
+
+.archive-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.archive-list li {
+  display: flex;
+  gap: 1rem;
+  align-items: baseline;
+  padding: 0.35rem 0;
+}
+
+.archive-list time {
+  flex: 0 0 5.5rem;
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.archive-link {
+  margin: 2.5rem 0;
+  font-family: var(--sans);
+  font-size: 0.95rem;
+}
+
+/* Footer ------------------------------------------------------------- */
+
+.site-footer {
+  margin-top: 4.5rem;
+  padding-top: 1.5rem;
+  padding-bottom: 2.75rem;
+  border-top: 1px solid var(--border);
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.site-footer a {
+  color: var(--text-muted);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.site-footer a:hover {
+  color: var(--accent);
+}
+
+/* Accessibility ------------------------------------------------------ */
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Small screens ------------------------------------------------------ */
+
+@media (max-width: 480px) {
+  body {
+    font-size: 1.0625rem;
+  }
+
+  .site-header {
+    padding-top: 1.25rem;
+    padding-bottom: 1.75rem;
+  }
+
+  .article-header h1 {
+    font-size: 1.6rem;
+  }
+
+  .archive-list li,
+  .read-next li {
+    flex-direction: column;
+    gap: 0;
+    padding: 0.5rem 0;
+  }
+}

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Page not found · {{ site_name }}{% endblock %}
+{% block meta_description %}Page not found.{% endblock %}
+
+{% block content %}
+<article class="article">
+  <header class="article-header">
+    <h1>Page not found</h1>
+  </header>
+  <div class="article-body">
+    <p>The page you were looking for doesn’t exist — it may have moved or never existed.</p>
+    <p><a href="/">Back to the homepage</a> or browse the <a href="/archive/">archive</a>.</p>
+  </div>
+</article>
+{% endblock %}

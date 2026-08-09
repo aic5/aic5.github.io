@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ site_name }}{% endblock %}</title>
+  <meta name="description" content="{% block meta_description %}{{ site_description }}{% endblock %}">
+  {% if canonical %}
+  <link rel="canonical" href="{{ canonical }}">
+  {% endif %}
+  <meta property="og:site_name" content="{{ site_name }}">
+  <meta property="og:title" content="{% block og_title %}{{ site_name }}{% endblock %}">
+  <meta property="og:description" content="{% block og_description %}{{ site_description }}{% endblock %}">
+  {% if canonical %}
+  <meta property="og:url" content="{{ canonical }}">
+  {% endif %}
+  <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+  {% block extra_head %}{% endblock %}
+  <link rel="alternate" type="application/rss+xml" title="{{ site_name }}" href="{{ site_url }}/feed.xml">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav aria-label="Main navigation">
+      <a class="site-name" href="/">{{ site_name }}</a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/archive/">Archive</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/feed.xml" title="RSS feed">RSS</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; {{ current_year }} {{ copyright_holder }} · <a href="/feed.xml">RSS</a></p>
+  </footer>
+  {{ analytics_html | safe }}
+</body>
+</html>
