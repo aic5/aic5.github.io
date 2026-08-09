@@ -10,6 +10,29 @@ The publishing workflow is the whole point:
 2. Commit and push to `main`.
 3. GitHub Actions builds the site and deploys it to GitHub Pages.
 
+## Quick reference — day-to-day commands
+
+Everything routine is a script in `scripts/` (run from the repo root):
+
+```bash
+scripts/new-post.sh                   # start a new article (prompts for title + slug)
+scripts/serve.sh                      # preview locally at http://localhost:8010
+scripts/serve.sh -kill                # same, killing whatever holds the port first
+scripts/serve.sh 8020                 # same, on a different port
+scripts/publish.sh "Commit message"   # tests + build + commit + push → deploys
+```
+
+The full write-and-publish loop:
+
+```bash
+scripts/new-post.sh          # 1. create the draft
+# ...write, then set draft: false in the file...
+scripts/serve.sh -kill       # 2. preview in the browser
+scripts/publish.sh "New post: my title"   # 3. ship it
+```
+
+Details on each script are under "Everyday workflow" below.
+
 ## Initial setup
 
 Requires Python 3.10+.
@@ -38,8 +61,9 @@ scripts/publish.sh     # test + build + commit + push (deploys via Actions)
 `new-post.sh` creates `content/posts/YYYY-MM-DD-<slug>.md` with `draft: true`
 so it stays unpublished while you write. `serve.sh` rebuilds, opens your
 browser, and serves `dist/` until Ctrl+C (default port 8010; pass another
-as an argument if it's busy). `publish.sh` refuses to push if the tests or
-build fail, so a broken post can't reach GitHub.
+as an argument, or `-kill` to evict whatever is already on the port).
+`publish.sh` refuses to push if the tests or build fail, so a broken post
+can't reach GitHub.
 
 ## Writing a new article
 
@@ -90,6 +114,8 @@ Everything under `static/` is copied verbatim into the site root, so
 `static/assets/...` is served at `/assets/...`.
 
 ## Local preview
+
+The easy way is `scripts/serve.sh` (see Quick reference above). By hand:
 
 ```bash
 python build.py

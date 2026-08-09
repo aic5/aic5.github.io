@@ -9,9 +9,7 @@ SITE_NAME = "Alex Castro"
 
 # Absolute URL of the deployed site, WITHOUT a trailing slash.
 # Used for canonical URLs, Open Graph tags, the RSS feed, and the sitemap.
-# When you connect your custom domain, change this to e.g.
-# "https://blog.example.com" and set CUSTOM_DOMAIN below.
-SITE_URL = "https://aic5.github.io"
+SITE_URL = "https://aic5.ai"
 
 SITE_DESCRIPTION = "Notes on software, finance, and whatever else seems worth writing down."
 
@@ -24,7 +22,7 @@ COPYRIGHT_HOLDER = "Blue Hill Foundry LLC"
 # the build writes a CNAME file into dist/ so GitHub Pages keeps the domain
 # configured across deployments. Leave as None if you are not using a
 # custom domain yet.
-CUSTOM_DOMAIN = None
+CUSTOM_DOMAIN = "aic5.ai"
 
 # Number of articles shown on the homepage and included in the RSS feed.
 HOMEPAGE_POST_COUNT = 10
