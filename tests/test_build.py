@@ -117,6 +117,16 @@ class TestFrontMatterParsing(unittest.TestCase):
         )
         self.assertEqual(parse_post(path).date, datetime.date(2026, 3, 5))
 
+    def test_image_field_parsed(self):
+        text = VALID_POST.replace("draft: false", "draft: false\nimage: /assets/images/x/cover.jpg")
+        post = parse_post(write_post(self.dir, "a.md", text))
+        self.assertEqual(post.image, "/assets/images/x/cover.jpg")
+
+    def test_relative_image_path_fails(self):
+        text = VALID_POST.replace("draft: false", "draft: false\nimage: cover.jpg")
+        with self.assertRaisesRegex(BuildError, "site-absolute"):
+            parse_post(write_post(self.dir, "a.md", text))
+
     def test_non_urlsafe_explicit_slug_fails(self):
         path = write_post(
             self.dir,

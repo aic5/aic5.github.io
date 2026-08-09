@@ -48,6 +48,7 @@ title: "${TITLE}"
 date: ${TODAY}
 description: ""
 tags: []
+# image: /assets/images/${SLUG}/cover.jpg   # uncomment for social-share preview
 slug: ${SLUG}
 draft: true
 ---

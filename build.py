@@ -58,6 +58,7 @@ class Post:
     body_markdown: str
     source: Path
     body_html: str = ""
+    image: str = ""  # optional social/share image, site-absolute path
 
     @property
     def url_path(self) -> str:
@@ -154,6 +155,13 @@ def parse_post(path: Path) -> Post:
 
     draft = bool(meta.get("draft", False))
 
+    image = str(meta.get("image") or "").strip()
+    if image and not (image.startswith("/") or image.startswith("http")):
+        raise BuildError(
+            f"{path}: 'image' must be a site-absolute path (e.g. "
+            f"/assets/images/{slug}/cover.jpg) or a full URL."
+        )
+
     return Post(
         title=title,
         date=date,
@@ -163,6 +171,7 @@ def parse_post(path: Path) -> Post:
         draft=draft,
         body_markdown=body,
         source=path,
+        image=image,
     )
 
 

@@ -5,6 +5,7 @@ description: "A short lesson on turning messy problems into clearer decisions an
 tags:
   - Consulting
   - Strategy
+image: /assets/images/how-i-learned-to-make-complex-problems-feel-manageable/shared-framework.jpg
 slug: how-i-learned-to-make-complex-problems-feel-manageable
 draft: false
 ---
@@ -13,7 +14,7 @@ When I started in consulting, I had no idea what to expect. I thought I would be
 
 Even very large, very capable, very organized teams do not automatically come up with one clean framework for resolving problems. Markets move. Policies evolve. Systems get patched together. And when things are going well, M&A can change the reality on the ground all over again. Progress often depends on a few key leaders carrying the company forward, one decision at a time.
 
-![Finance teams aligning on a cash forecast](/assets/images/how-i-learned-to-make-complex-problems-feel-manageable/shared-framework.png)
+![Project teams aligning on a complex problem](/assets/images/how-i-learned-to-make-complex-problems-feel-manageable/shared-framework.jpg)
 
 In strategy work, the most effective leaders are not just the people with the sharpest answer. They listen actively, summarize well, and frame a view that helps different stakeholders see how their pieces fit together. They understand that people across an organization can talk past each other even when they are all trying to solve the same problem.
 

@@ -97,6 +97,10 @@ Field notes:
   in search-engine snippets, and in the RSS feed.
 * `draft: true` keeps a post out of the build entirely. Flip it to
   `false` (or delete the line) to publish.
+* `image` (optional) sets the preview image shown when the article link
+  is shared on WhatsApp, LinkedIn, X, Slack, etc. Use a site-absolute
+  path, e.g. `image: /assets/images/<slug>/cover.jpg`. Keep it under
+  ~300 KB so every platform renders it.
 
 Duplicate slugs, malformed YAML, invalid dates, and missing required
 fields all fail the build with a message naming the offending file.
