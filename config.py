@@ -9,8 +9,9 @@ SITE_NAME = "Alex Castro"
 
 # Absolute URL of the deployed site, WITHOUT a trailing slash.
 # Used for canonical URLs, Open Graph tags, the RSS feed, and the sitemap.
-# Replace with your real domain, e.g. "https://blog.example.com".
-SITE_URL = "https://YOUR-DOMAIN.example"
+# When you connect your custom domain, change this to e.g.
+# "https://blog.example.com" and set CUSTOM_DOMAIN below.
+SITE_URL = "https://aic5.github.io"
 
 SITE_DESCRIPTION = "Notes on software, finance, and whatever else seems worth writing down."
 
