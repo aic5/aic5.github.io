@@ -39,4 +39,22 @@ git commit -m "$MSG"
 git push origin main
 
 echo "Pushed. GitHub Actions is now building and deploying the site."
-echo "Watch progress in your repository's Actions tab."
+
+# Open the repository's Actions tab so the deployment can be tracked.
+# Derives the URL from the origin remote (works for HTTPS and SSH remotes).
+REMOTE="$(git remote get-url origin)"
+ACTIONS_URL="$(echo "$REMOTE" \
+  | sed -E 's#^git@github\.com:#https://github.com/#; s#\.git$##')/actions"
+
+case "$ACTIONS_URL" in
+  https://github.com/*)
+    echo "Opening $ACTIONS_URL"
+    if command -v open >/dev/null 2>&1; then open "$ACTIONS_URL"
+    elif command -v xdg-open >/dev/null 2>&1; then xdg-open "$ACTIONS_URL"
+    else echo "Track the deployment at: $ACTIONS_URL"
+    fi
+    ;;
+  *)
+    echo "Track the deployment in your repository's Actions tab."
+    ;;
+esac
