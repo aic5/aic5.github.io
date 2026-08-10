@@ -33,4 +33,7 @@ FEED_POST_COUNT = 20
 # privacy-friendly reader stats and view counts without running a server,
 # a lightweight option is GoatCounter (https://www.goatcounter.com):
 #   ANALYTICS_HTML = '<script data-goatcounter="https://YOURCODE.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>'
-ANALYTICS_HTML = ""
+ANALYTICS_HTML = (
+    '<script data-goatcounter="https://aic5.goatcounter.com/count" '
+    'async src="//gc.zgo.at/count.js"></script>'
+)
