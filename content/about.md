@@ -13,4 +13,4 @@ You can subscribe via the [RSS feed](/feed.xml).
 Feel free to reach out here: 
 
 - [LinkedIn](https://www.linkedin.com/in/aic5/)
-- Twitter
+- [Twitter](https://x.com/AlexCastro_aic5)
