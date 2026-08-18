@@ -19,7 +19,8 @@ scripts/new-post.sh                   # start a new article (prompts for title +
 scripts/serve.sh                      # preview locally at http://localhost:8010
 scripts/serve.sh -kill                # same, killing whatever holds the port first
 scripts/serve.sh 8020                 # same, on a different port
-scripts/publish.sh "Commit message"   # tests + build + commit + push → deploys
+./auto-publish.command                # double-click in Finder (or run): asks for a message, publishes
+scripts/publish.sh "Commit message"   # same, non-interactive (message on the command line)
 ```
 
 The full write-and-publish loop:
@@ -158,6 +159,18 @@ One-time repository setup: in **Settings → Pages**, set **Source** to
    enable **Enforce HTTPS** once the certificate is issued (this can take
    a few minutes after DNS propagates).
 
+## Email updates
+
+Readers can subscribe by email via [Buttondown](https://buttondown.com).
+The blog only hosts a plain HTML form (article footer); Buttondown stores
+the addresses and handles confirmation and unsubscribes. Set
+`BUTTONDOWN_USERNAME` in `config.py`, or set it to `None` to hide the form.
+
+Sending is manual (Buttondown's RSS-to-email automation is a paid add-on):
+after publishing a new article, write a short note in Buttondown with the
+title and link and send it. `scripts/publish.sh` detects newly published
+articles and prints a reminder with the compose link after each push.
+
 ## Reader stats
 
 The site ships with zero JavaScript. If you want basic view counts, set
@@ -214,6 +227,7 @@ only the standard library (`unittest`).
 │   └── assets/images/    # images referenced by posts
 ├── build.py              # the whole generator
 ├── config.py             # site name, URL, author, options
+├── auto-publish.command  # double-click to publish (asks for the commit message)
 ├── scripts/              # new-post.sh, serve.sh, publish.sh
 ├── tests/                # unit tests for the generator
 └── .github/workflows/deploy.yml

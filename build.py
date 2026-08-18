@@ -234,6 +234,7 @@ def make_env() -> Environment:
         site_description=config.SITE_DESCRIPTION,
         author_name=config.AUTHOR_NAME,
         copyright_holder=getattr(config, "COPYRIGHT_HOLDER", config.AUTHOR_NAME),
+        buttondown_username=getattr(config, "BUTTONDOWN_USERNAME", None),
         analytics_html=config.ANALYTICS_HTML,
         current_year=datetime.date.today().year,
         tag_slug=tag_slug,

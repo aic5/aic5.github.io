@@ -24,6 +24,11 @@ COPYRIGHT_HOLDER = "Blue Hill Foundry LLC"
 # custom domain yet.
 CUSTOM_DOMAIN = "aic5.ai"
 
+# Email updates via Buttondown (https://buttondown.com). Buttondown watches
+# feed.xml and emails subscribers when a new post appears; the blog only
+# hosts a plain HTML subscribe form. Set to None to hide the form.
+BUTTONDOWN_USERNAME = "aic5"
+
 # Number of articles shown on the homepage and included in the RSS feed.
 HOMEPAGE_POST_COUNT = 10
 FEED_POST_COUNT = 20

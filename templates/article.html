@@ -50,6 +50,20 @@
       <button type="button" class="copy-link" data-url="{{ canonical }}" hidden>Copy link</button>
     </nav>
 
+    {% if buttondown_username %}
+    <section class="subscribe" aria-label="Get new posts by email">
+      <form action="https://buttondown.com/api/emails/embed-subscribe/{{ buttondown_username }}"
+            method="post" target="_blank">
+        <label for="bd-email">Get new posts by email</label>
+        <p class="subscribe-note">I'll send a short note when I write something new. No spam, unsubscribe anytime.</p>
+        <div class="subscribe-row">
+          <input type="email" id="bd-email" name="email" placeholder="you@example.com" required autocomplete="email">
+          <button type="submit">Subscribe</button>
+        </div>
+      </form>
+    </section>
+    {% endif %}
+
     {% if read_next %}
     <section class="read-next" aria-label="Read next">
       <h2>Read next</h2>

@@ -34,6 +34,20 @@ fi
 
 MSG="${1:-Publish $(date +%F)}"
 
+# Detect newly published articles (new files, or drafts flipped to false)
+# so we can remind you to email subscribers after the push.
+NEW_POSTS="$(
+  for f in $(git diff --name-only HEAD -- content/posts/ ; git ls-files --others --exclude-standard content/posts/); do
+    [ -f "$f" ] || continue
+    grep -qiE '^draft:\s*true' "$f" && continue
+    if git cat-file -e "HEAD:$f" 2>/dev/null; then
+      # Existing file: only counts if it *was* a draft before this change.
+      git show "HEAD:$f" | grep -qiE '^draft:\s*true' || continue
+    fi
+    grep -m1 -E '^title:' "$f" | sed -E 's/^title:\s*//; s/^"(.*)"$/\1/'
+  done | sort -u
+)"
+
 git add -A
 git commit -m "$MSG"
 git push origin main
@@ -58,3 +72,11 @@ case "$ACTIONS_URL" in
     echo "Track the deployment in your repository's Actions tab."
     ;;
 esac
+
+# Reminder: subscribers are emailed manually (Buttondown free plan).
+if [ -n "$NEW_POSTS" ]; then
+  echo
+  echo "New article(s) published:"
+  echo "$NEW_POSTS" | sed 's/^/  - /'
+  echo "Remember to email subscribers: https://buttondown.com/emails/new"
+fi
