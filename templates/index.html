@@ -5,20 +5,29 @@
   <h1 class="visually-hidden">Recent articles</h1>
   {% for post in posts %}
   <article class="post-summary">
-    <h2><a href="{{ post.url_path }}">{{ post.title }}</a></h2>
-    <p class="post-meta">
-      <time datetime="{{ post.date.isoformat() }}">{{ post.date.strftime("%B %-d, %Y") }}</time>
-    </p>
-    {% if post.description %}
-    <p class="post-description">{{ post.description }}</p>
-    {% endif %}
-    {% if post.tags %}
-    <ul class="tag-list">
-      {% for tag in post.tags %}
-      <li><a href="/tags/{{ tag_slug(tag) }}/">{{ tag }}</a></li>
-      {% endfor %}
-    </ul>
-    {% endif %}
+    <a class="post-thumb" href="{{ post.url_path }}" tabindex="-1" aria-hidden="true">
+      {% if post.image %}
+      <img src="{{ post.image }}" alt="" loading="lazy">
+      {% else %}
+      <span class="post-thumb-placeholder">aic5</span>
+      {% endif %}
+    </a>
+    <div class="post-summary-body">
+      <h2><a href="{{ post.url_path }}">{{ post.title }}</a></h2>
+      <p class="post-meta">
+        <time datetime="{{ post.date.isoformat() }}">{{ post.date.strftime("%B %-d, %Y") }}</time>
+      </p>
+      {% if post.description %}
+      <p class="post-description">{{ post.description }}</p>
+      {% endif %}
+      {% if post.tags %}
+      <ul class="tag-list">
+        {% for tag in post.tags %}
+        <li><a href="/tags/{{ tag_slug(tag) }}/">{{ tag }}</a></li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </div>
   </article>
   {% else %}
   <p>No articles yet.</p>

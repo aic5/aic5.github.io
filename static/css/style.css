@@ -260,7 +260,44 @@ main {
 /* Post lists --------------------------------------------------------- */
 
 .post-summary {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.4rem;
   margin-bottom: 3.25rem;
+}
+
+.post-thumb {
+  flex: 0 0 6.5rem;
+  display: block;
+}
+
+.post-thumb img,
+.post-thumb-placeholder {
+  display: block;
+  width: 6.5rem;
+  height: 6.5rem;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+/* Gray placeholder with the aic5 mark, for posts without an image. */
+.post-thumb-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  opacity: 0.75;
+}
+
+.post-summary-body {
+  flex: 1;
+  min-width: 0;
 }
 
 .post-summary h2 {
@@ -705,6 +742,20 @@ pre code {
 @media (max-width: 480px) {
   .article-header h1 {
     font-size: 1.6rem;
+  }
+
+  .post-summary {
+    gap: 1rem;
+  }
+
+  .post-thumb {
+    flex-basis: 4.5rem;
+  }
+
+  .post-thumb img,
+  .post-thumb-placeholder {
+    width: 4.5rem;
+    height: 4.5rem;
   }
 
   .nav-links {
