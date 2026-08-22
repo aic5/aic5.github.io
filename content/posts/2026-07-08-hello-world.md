@@ -1,6 +1,6 @@
 ---
 title: "Hello, World: How This Blog Works"
-date: 2026-08-09
+date: 2026-07-08
 description: "A first post that doubles as a tour of what this little static blog can render."
 tags:
   - Meta
