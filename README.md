@@ -118,6 +118,13 @@ post's slug, and reference them by absolute path:
 Everything under `static/` is copied verbatim into the site root, so
 `static/assets/...` is served at `/assets/...`.
 
+### Capital Workbench callout
+
+Finance-related articles can include the reusable, branded Capital Workbench
+callout. See [`docs/capital-workbench-callout.md`](docs/capital-workbench-callout.md)
+for the copy-and-edit snippet, placement guidance, and the fields that may be
+customized for each article.
+
 ## Local preview
 
 The easy way is `scripts/serve.sh` (see Quick reference above). By hand:

@@ -29,6 +29,16 @@ That is when leadership meetings become a reaction to presented numbers. We like
 
 The valuable conversation starts after the number is understood. What changed? Why did it change? Does it matter now, or is it just noise? What lever can we actually pull? What happens if we pull it? What happens two steps later? That is the part where AI still has limits. The part that matters.
 
+<aside class="project-callout" aria-label="Capital Workbench">
+  <div class="project-callout-brand">
+    <span class="project-callout-mark">CW</span>
+    <span class="project-callout-name">Capital<br>Workbench</span>
+  </div>
+  <p class="project-callout-tagline">Reasoning and Analytics</p>
+  <p class="project-callout-copy">I’m building Capital Workbench to help teams move beyond financial metrics toward better questions and clearer actions.</p>
+  <a class="project-callout-link" href="https://capital-workbench.com/performance-overview">Explore a public company <span aria-hidden="true">→</span></a>
+</aside>
+
 A model can produce a list of possible actions. It can even list potential risks, expected outcomes or externalities. But if the prompt is general, the answer will usually be general too. It may include a long list of things that could matter somewhere, without knowing which ones matter here. And in many cases leadership cannot run the same experiment more than once.
 
 Humans know the organization. Leaders know the personalities, the constraints, the history, the incentives, the customer promises, the political reality, and the timing. They know which issue is a real risk and which one is just noise wearing a costume. That context matters because decisions create consequences beyond each metric. 

@@ -439,6 +439,85 @@ main {
   font-style: normal;
 }
 
+/* A quiet, editorial project note used when a post connects naturally
+   to something the author is building. Kept text-led so it reads as
+   context rather than an advertisement. */
+.article-body .project-callout {
+  margin: 2rem 0;
+  padding: 1rem 1.2rem 1.1rem;
+  color: #e2e8f0;
+  background: #101b30;
+  border: 1px solid #30415d;
+  border-left: 3px solid #7ab8f5;
+  border-radius: 6px;
+  font-family: var(--sans);
+  font-size: 0.84em;
+  line-height: 1.55;
+}
+
+.article-body .project-callout-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.article-body .project-callout-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 1.65rem;
+  min-width: 2.55rem;
+  padding: 0 0.42rem;
+  color: #f1f5f9;
+  border: 1.5px solid #f1f5f9;
+  border-radius: 0.22rem;
+  font-size: 0.92rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.article-body .project-callout-name {
+  color: #f1f5f9;
+  font-size: 0.82rem;
+  font-weight: 750;
+  letter-spacing: 0.2em;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+.article-body .project-callout p {
+  margin: 0;
+}
+
+.article-body .project-callout p.project-callout-tagline {
+  margin-top: 0.55rem;
+  color: #9eabc0;
+  font-size: 0.7rem;
+  letter-spacing: 0.065em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.article-body .project-callout p.project-callout-copy {
+  margin-top: 0.9rem;
+  color: #e2e8f0;
+}
+
+.article-body .project-callout-link {
+  display: block;
+  width: fit-content;
+  margin: 0.6rem 0 0 auto;
+  color: #93c5fd;
+  font-weight: 650;
+  text-decoration-color: color-mix(in srgb, #93c5fd 55%, transparent);
+}
+
+.article-body .project-callout-link:hover {
+  color: #bfdbfe;
+  text-decoration-color: #bfdbfe;
+}
+
 .article-body hr {
   border: none;
   margin: 2.75rem 0;
