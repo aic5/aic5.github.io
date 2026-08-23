@@ -11,7 +11,7 @@ slug: ai-can-read-the-map
 draft: false
 ---
 
-> When the map and the terrain disagree, trust the terrain.
+> When the map and the terrain disagree, trust the terrain
 
 A lot of the current AI conversation still gets framed as replacement. Will AI replace analysts? Will it replace decision makers? Will it eventually do the work of entire teams? I think that framing misses what is actually happening.
 
