@@ -1,5 +1,5 @@
 ---
-title: "Autonomous Workforce Management: The Missing Dimension of Enterprise Transformation"
+title: "Autonomous Workforce Management: Next Step in Enterprise Transformation"
 date: 2026-09-07
 description: "AI agents add a new dimension to the operating model: how organizations allocate, govern, and optimize work across humans and autonomous systems."
 tags:
