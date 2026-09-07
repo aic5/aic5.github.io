@@ -41,6 +41,16 @@ That doesn't mean 500 agents independently reconciling accounts and posting what
 
 In other words, the unit we are designing isn't simply an agent. It is a delivery model combining execution, review, control and human judgment. That starts looking much less like implementing a piece of software and much more like designing an organization and service delivery model.
 
+<aside class="project-callout" aria-label="Capital Workbench">
+  <div class="project-callout-brand">
+    <span class="project-callout-mark">CW</span>
+    <span class="project-callout-name">Capital<br>Workbench</span>
+  </div>
+  <p class="project-callout-tagline">Reasoning and Analytics</p>
+  <p class="project-callout-copy">I’m building Capital Workbench to help teams move beyond financial metrics toward better questions and clearer actions.</p>
+  <a class="project-callout-link" href="https://capital-workbench.com/performance-overview">Explore a public company <span aria-hidden="true">→</span></a>
+</aside>
+
 ## But Isn't This Just Better Automation?
 
 There is an obvious counterargument. Organizations have been expanding automation for decades. Spreadsheets automated calculations. ERP systems automated bookkeeping. Workflow tools automated processes. RPA automated repetitive interactions with different systems. Agents may simply be the next step on that path: automation capable of handling complex cognitive work.
