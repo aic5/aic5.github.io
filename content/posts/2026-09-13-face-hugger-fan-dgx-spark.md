@@ -69,6 +69,8 @@ There is something healthy about making advanced computing feel physical again. 
 
 The complete project is [available on GitHub](https://github.com/aic5/face-hugger-fan-dgx-spark). It includes the CircuitPython firmware, DGX telemetry service, dashboard, wiring guide, bill of materials, thermal results, tests, and printable STL files for the body and mounting arms. This project is open under the MIT license. You are free to use it at your own risk, and improve on this if you feel like it.
 
+I have also shared the project on the [NVIDIA Developer Forums](https://forums.developer.nvidia.com/t/temperature-controlled-external-fan-for-dgx-spark/383193) for discussion with other DGX Spark users.
+
 It is an experimental accessory, not an NVIDIA-supported modification, and anyone reproducing it should read the electrical and safety notes carefully. The fan motor uses 12 V, the controller does not, and confusing the two is an unusually fast way to make the project less fun.
 
 It is nice that the DGX Spark is advertised as an AI supercomputer, yet progress can still be made with a fan, a microcontroller, a 3D printer, and the ability to create something slightly ridiculous.
