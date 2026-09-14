@@ -6,9 +6,10 @@ tags:
   - AI
   - Hardware
   - Projects
+  - DIU
 image: /assets/images/face-hugger-fan-dgx-spark/face-hugger-fan-real-build.jpg
 slug: face-hugger-fan-dgx-spark
-draft: true
+draft: false
 ---
 
 I recently wrote that one of the important differences between renting computing and owning it is the freedom to misuse the machine. When the hardware is yours, you can leave it running overnight, take it apart, connect it to something else, or attempt a project that is useful mainly because you find it interesting. This is what I meant.
