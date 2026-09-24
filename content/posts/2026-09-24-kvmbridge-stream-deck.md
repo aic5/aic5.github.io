@@ -1,7 +1,7 @@
 ---
 title: "Switching Setups with One Button"
 date: 2026-09-24
-description: "Build a local bridge between Stream Deck and a TESmart KVM: wire an RS232 adapter, install the Windows service, and set up silent Mac buttons."
+description: "Build a local bridge between StreamDeck and a KVM with a RS232 adapter."
 tags:
   - Hardware
   - Projects
@@ -11,15 +11,15 @@ slug: kvmbridge-stream-deck
 draft: true
 ---
 
-I wanted a button for each computer on my desk. Press the Windows button, get the Windows machine on both monitors. Press the Mac button, get the Mac. The KVM already did the switching; I wanted the controls on my Stream Deck.
+I wanted a simple button to switch between each computer on my desk. Press the Windows button, get the Windows machine on both monitors. Press the Mac button, get the Mac. The KVM already did the switching, but the interface required me to reach around the desk or use a remote control. I wanted control to be done by agents and also on my StreamDeck.
 
-The result is [KvmBridge](https://github.com/aic5/kvmbridge), a small project that connects a TESmart KVM's serial port to an authenticated service on my local network. A Stream Deck button opens a silent Mac app, the app sends a request to Windows, and Windows tells the KVM which computer to select.
+Yes, this was a minor inconvenience. And, yes, this slution is a complete overkill... But some mountains should be climbed just because they are there. : )
+
+The result is [KvmBridge](https://github.com/aic5/kvmbridge), a small project that connects a TESmart KVM's serial port to an authenticated service on my local network. Added a Stream Deck button to open a silent Mac app, the app sends a request to Windows PC that controls the serial connection to the KVM. Done.
 
 ![My Stream Deck with the four KVM selection buttons highlighted across the middle row.](/assets/images/kvmbridge-stream-deck/stream-deck-kvm-buttons.jpg)
 
 *The four highlighted buttons select KVM inputs 1–4. I use custom icons here; the repository also includes a numbered set.*
-
-This follows the same instinct as my [Face Hugger Fan for the DGX Spark](/articles/face-hugger-fan-dgx-spark/): take hardware I already have and make it behave a little more like I want. The fan needed a temperature controller. This project needed three wires and a way to turn a button press into a serial command.
 
 Here is how to reproduce it, from the parts to the first successful switch. The [repository README](https://github.com/aic5/kvmbridge/blob/main/README.md) and its linked guides are the reference for ongoing updates.
 
@@ -36,13 +36,13 @@ The control path has four steps:
 
 ![KvmBridge control path, from Stream Deck and a Mac launcher through the Windows service and serial converter to the KVM and both monitors.](/assets/images/kvmbridge-stream-deck/kvmbridge-overview.svg)
 
-The Windows host is the bridge because it owns the serial connection. It can run the service without anyone signing in, but **it must stay awake**. The Mac apps do not wake it remotely.
+The Windows host is the bridge because it owns the serial connection. It can run the service without anyone signing in. 
 
-You do not need a Stream Deck plugin. The supplied apps work with its built-in **System → Open** action. You can also call the same API from a script or another computer on the LAN.
+There is no need for a StreamDeck plugin. The supplied app work with its built-in **System → Open** action. You can also call the same API from a script or another computer on the LAN, or tell an AI agent to do it for you.
 
 ## Parts and Requirements
 
-My original build uses a **TESmart HKS0802A1U**, also listed as **HKS402-E23**, with HDMI connectors, and a **Waveshare USB to RS232/485 converter using FT232RNL**. The DisplayPort KVM linked below also works, although the detailed protocol notes in the repository describe the original HDMI build. Do not assume every TESmart model accepts the same commands.
+My original build uses a **TESmart HKS0802A1U**, also listed as **HKS402-E23**, with HDMI connectors, and a **Waveshare USB to RS232/485 converter using FT232RNL**. The DisplayPort KVM linked below also works, although the detailed protocol notes in the repository describe the original HDMI build. 
 
 The Amazon links below are affiliate links. I may earn a commission at no additional cost to you. **As an Amazon Associate I earn from qualifying purchases.**
 
@@ -80,8 +80,6 @@ Set the converter's switches to **RS232** and **NC**, then connect:
 **Transmit connects to receive.** The signal names matter more than their position in a photo: follow the actual labels on your converter and KVM. The diagram is a signal map, not a drawing of the connector's physical pin order.
 
 The service uses **9600 baud, 8 data bits, no parity, one stop bit, and no flow control**. The converter's `120R` termination setting is for RS485; this connection uses RS232 and NC.
-
-Keep Stream Deck connected to the controlling Mac as well. If it moves to another computer with the KVM's USB focus, it cannot keep launching the Mac controls.
 
 ## 2. Install the Windows Service
 
@@ -203,6 +201,4 @@ Replace the example paths and IP address with yours. The API key comes from the 
 
 The project's scope is deliberately small: select an input, switch both monitors, and report the latest observed channel event. It does not control split-display routing, independent keyboard/USB focus, or EDID settings. Status is an observation, not proof of a live picture on the monitors.
 
-The code, setup guides, icons, and tests are [available on GitHub under the MIT license](https://github.com/aic5/kvmbridge). If you adapt it to another KVM, documenting the exact model and serial behavior would be especially useful.
-
-For my desk, the payoff is the four buttons in the first photo. There is a Windows service, a certificate, and a serial protocol behind them. Once configured, I just press the computer I want.
+The code, setup guides, icons, and tests are [available on GitHub under the MIT license](https://github.com/aic5/kvmbridge). If you adapt it to another KVM, documenting the exact model and serial behavior would be useful. 
