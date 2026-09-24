@@ -8,7 +8,7 @@ tags:
   - How-to
 image: /assets/images/kvmbridge-stream-deck/stream-deck-kvm-buttons.jpg
 slug: kvmbridge-stream-deck
-draft: true
+draft: false
 ---
 
 I wanted a simple button to switch between each computer on my desk. Press the Windows button, get the Windows machine on both monitors. Press the Mac button, get the Mac. The KVM already did the switching, but the interface required me to reach around the desk or use a remote control. I wanted control to be done by agents and also on my StreamDeck.
