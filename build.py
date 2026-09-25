@@ -59,6 +59,7 @@ class Post:
     source: Path
     body_html: str = ""
     image: str = ""  # optional social/share image, site-absolute path
+    category: str = ""  # build | ai | finance | personal (drives sidebar icon)
 
     @property
     def url_path(self) -> str:
@@ -77,6 +78,27 @@ class Page:
     @property
     def url_path(self) -> str:
         return f"/{self.slug}/"
+
+
+# Categories drive the small icon next to each article in the sidebar.
+CATEGORIES = ("build", "ai", "finance", "personal")
+
+# When a post has no explicit `category`, infer one from its tags.
+# Checked in this order, so the first matching rule wins.
+CATEGORY_TAG_RULES: list[tuple[str, set[str]]] = [
+    ("build", {"hardware", "projects", "how-to", "python", "meta"}),
+    ("finance", {"finance"}),
+    ("ai", {"ai"}),
+    ("personal", {"consulting", "strategy", "leadership", "learning"}),
+]
+
+
+def infer_category(tags: list[str]) -> str:
+    slugs = {slugify(t) for t in tags}
+    for category, tag_set in CATEGORY_TAG_RULES:
+        if slugs & tag_set:
+            return category
+    return ""
 
 
 def slugify(text: str) -> str:
@@ -162,6 +184,14 @@ def parse_post(path: Path) -> Post:
             f"/assets/images/{slug}/cover.jpg) or a full URL."
         )
 
+    category = str(meta.get("category") or "").strip().lower()
+    if category and category not in CATEGORIES:
+        raise BuildError(
+            f"{path}: unknown category {category!r}. "
+            f"Use one of: {', '.join(CATEGORIES)}."
+        )
+    category = category or infer_category(tags)
+
     return Post(
         title=title,
         date=date,
@@ -172,6 +202,7 @@ def parse_post(path: Path) -> Post:
         body_markdown=body,
         source=path,
         image=image,
+        category=category,
     )
 
 

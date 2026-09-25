@@ -7,6 +7,7 @@ tags:
   - Strategy
 image: /assets/images/how-i-learned-to-make-complex-problems-feel-manageable/shared-framework.jpg
 slug: how-i-learned-to-make-complex-problems-feel-manageable
+category: personal
 draft: false
 ---
 

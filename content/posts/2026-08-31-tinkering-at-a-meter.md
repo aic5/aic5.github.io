@@ -7,6 +7,7 @@ tags:
   - Learning
 image: /assets/images/tinkering-at-a-meter/tinkering-metered-world.jpg
 slug: tinkering-at-a-meter
+category: ai
 draft: false
 ---
 

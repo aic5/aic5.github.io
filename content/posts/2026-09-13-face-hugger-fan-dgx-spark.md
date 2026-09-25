@@ -9,6 +9,7 @@ tags:
   - DIU
 image: /assets/images/face-hugger-fan-dgx-spark/face-hugger-fan-real-build.jpg
 slug: face-hugger-fan-dgx-spark
+category: build
 draft: false
 ---
 

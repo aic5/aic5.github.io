@@ -8,6 +8,7 @@ tags:
   - How-to
 image: /assets/images/kvmbridge-stream-deck/stream-deck-kvm-buttons.jpg
 slug: kvmbridge-stream-deck
+category: build
 draft: false
 ---
 

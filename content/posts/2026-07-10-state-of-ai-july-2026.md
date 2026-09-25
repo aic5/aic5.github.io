@@ -7,6 +7,7 @@ tags:
   - Report
 image: /assets/images/state-of-ai-2026/capability-outpacing-organizations.jpg
 slug: state-of-ai-2026
+category: ai
 draft: false
 ---
 

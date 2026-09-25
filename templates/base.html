@@ -55,7 +55,7 @@
       <ul>
         {% for p in sidebar_posts %}
         <li>
-          <a href="{{ p.url_path }}"{% if current_path == p.url_path %} class="active" aria-current="page"{% endif %}>{{ p.title }}</a>
+          <a href="{{ p.url_path }}"{% if p.category %} data-category="{{ p.category }}"{% endif %}{% if current_path == p.url_path %} class="active" aria-current="page"{% endif %}>{{ p.title }}</a>
         </li>
         {% endfor %}
       </ul>

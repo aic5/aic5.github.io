@@ -8,6 +8,7 @@ tags:
   - Finance
 image: /assets/images/ai-can-read-the-map/map-and-canyon-v3.jpg
 slug: ai-can-read-the-map
+category: finance
 draft: false
 ---
 

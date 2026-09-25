@@ -6,6 +6,7 @@ tags:
   - Meta
   - Python
 slug: hello-world
+category: build
 draft: false
 ---
 

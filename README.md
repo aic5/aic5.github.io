@@ -96,6 +96,11 @@ Field notes:
   Tags are grouped case-insensitively ("AI" and "ai" share a page).
 * `description` is optional but recommended — it appears on the homepage,
   in search-engine snippets, and in the RSS feed.
+* `category` (optional) sets the small icon next to the article in the
+  sidebar: `build` (gear), `ai` (chip), `finance` ($), or `personal`
+  (compass). If omitted, it is inferred from the tags (Hardware/Projects/
+  How-to → build, Finance → finance, AI → ai, Consulting/Strategy/
+  Leadership/Learning → personal); posts that match nothing get a plain dot.
 * `draft: true` keeps a post out of the build entirely. Flip it to
   `false` (or delete the line) to publish.
 * `image` (optional) sets the preview image shown when the article link

@@ -8,6 +8,7 @@ tags:
   - Transformation
 image: /assets/images/autonomous-workforce-management/autonomous-workforce-management.jpg
 slug: autonomous-workforce-management
+category: ai
 draft: false
 ---
 

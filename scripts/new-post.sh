@@ -48,6 +48,7 @@ title: "${TITLE}"
 date: ${TODAY}
 description: ""
 tags: []
+category: ""   # build | ai | finance | personal (sidebar icon; inferred from tags if blank)
 # image: /assets/images/${SLUG}/cover.jpg   # uncomment for social-share preview
 slug: ${SLUG}
 draft: true
